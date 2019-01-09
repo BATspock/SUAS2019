@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	<meta charset="UTF-8">
+		<title>ODLC</title>
+	</head>
+    <body style="display:flex; flex-direction: column; align-items: left">
+    	<h1>ODLC</h1>
+        	<div style="display:flex; flex-direction: row">
+            	<div style="display:flex; flex-direction: column" style="width: 50%">
+                	<img src= {{x}} name="MainImage" id="MainImage" alt="IMAGE NOT FOUND" width="500" height="333">
+        		</div>
+				
+        	<div style="display:flex; flex-direction: column; align-items: center" style="width:50%">
+				<form style="display:flex; flex-direction: column; align-items: center" style="width:50%" method="post" action="{{url_for('submit_form')}}">
+	
+					<h2>Letter Colour</h2>
+
+					<select name="letter_colour">
+						<option value="{{odlc_colours[0]}}" selected>{{odlc_colours[0]}}</option>
+				    	{% for letter_colour in odlc_colours[1:] %}
+				    	<option value= "{{letter_colour}}" SELECTED>{{letter_colour}}</option>"
+				    	{% endfor %}
+					</select>
+				
+					<h2>Letter </h2>
+
+					<select name="alphanumeric">
+						<option value="{{alphanumeric[0]}}" selected>{{alphanumeric[0]}}</option>
+				    	{% for alphanumeric in alphanumeric[1:] %}
+				    	<option value= "{{alphanumeric}}" SELECTED>{{alphanumeric}}</option>"
+				    	{% endfor %}
+					</select>
+					<!--<input type="text" name="alphanumeric" style="width: 50%" pattern="[a-zA-Z0-9]" size="1" /><br />-->
+
+					<h2>Background Colour</h2>
+
+					<select name="bg_colour">
+						<option value="{{odlc_colours[0]}}" selected>{{odlc_colours[0]}}</option>
+				    	{% for bg_colour in odlc_colours[1:] %}
+				    	<option value= "{{bg_colour}}" SELECTED>{{bg_colour}}</option>"
+				    	{% endfor %}
+					</select>
+
+					<h2>Shape</h2>
+
+					<select name="shape">
+						<option value="{{shapes[0]}}" selected>{{shapes[0]}}</option>
+				  	  	{% for shape in shapes[1:] %}
+				 	   <option value= "{{shape}}" SELECTED>{{shape}}</option>"
+				    	{% endfor %}
+					</select>
+
+					<h2>Orientation</h2>
+
+					<select name="orientation">
+						<option value="{{orientations[0]}}" selected>{{orientations[0]}}</option>
+				    	{% for orientation in orientations[1:] %}
+				    	<option value= "{{orientation}}" SELECTED>{{orientation}}</option>"
+				   	 	{% endfor %}
+					</select>
+					
+					<div>
+						<br/>
+						<button name="SubmitBtn">Submit</button>
+					</div>
+
+				</form>
+				
+				<form method="post" action="{{url_for('previous_image')}}">
+					<button name="PreviousImg">Previous</button>
+					
+				</form>
+				
+				<form method="post" action="{{url_for('next_image')}}">
+					<button name="NextImg">Next</button>
+				</form>
+				
+				<form method="post" action="{{url_for('delete_image')}}">
+					<button name="DeleteImg">Delete</button>
+				</form>
+				
+			</div>
+		</div>
+	</body>
+</html>
