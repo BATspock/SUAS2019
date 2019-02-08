@@ -3,3 +3,4 @@ Working on Shape Detection using CNN.
 2. mohit@wildbeast:~$ kaggle datasets download -d gndctrl2mjrtm/auvsi-suas-dataset
 3. Uploaded dataset to Colab.
 4. Find the Colab notebook here - https://colab.research.google.com/drive/1Wx_jSCFF2D3cbkbDghYqlLTeFMV7hXXX
+5. Uploaded sample images to shapes directory
