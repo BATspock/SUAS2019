@@ -42,10 +42,8 @@ class ImageVals:
         return None
         
     def moveimg(self,imageArray,imageIndex):
-        #CHECK
         old_file = os.path.join(path,self.imageArray[self.imageIndex])
         new_file = os.path.join(path1,self.imageArray[self.imageIndex])
-        #os.rename(old_file,new_file)
         os.rename(self.imageArray[self.imageIndex], path1+'img'+str(imageIndex)+'.jpg')
         self.imageArray.remove(self.imageArray[self.imageIndex])
         if(self.imageIndex==len(self.imageArray)):
