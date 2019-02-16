@@ -18,8 +18,7 @@ class ImageVals:
                 if statinfo.st_size!=0:
                     if filepath.endswith('.jpg') or filepath.endswith('.JPG') or filepath.endswith('.png') or filepath.endswith('.PNG'):
                         if filepath not in self.imageArray:
-                            self.imageArray.append(filepath)                
-        #print(imageArray)        
+                            self.imageArray.append(filepath)                        
         return None
 
     def previousimg(self,imageArray,imageIndex,myImage):
@@ -43,6 +42,7 @@ class ImageVals:
         return None
         
     def moveimg(self,imageArray,imageIndex):
+        #CHECK
         old_file = os.path.join(path,self.imageArray[self.imageIndex])
         new_file = os.path.join(path1,self.imageArray[self.imageIndex])
         #os.rename(old_file,new_file)

@@ -1,24 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
+
 	<head>
 	<meta charset="UTF-8">
-		<title>ODLC</title>
+	<title>ODLC</title>
 	</head>
-    <body style="display:flex; flex-direction: column; align-items: left">
+	
+   <body style="display:flex; flex-direction: column; align-items: left">
+		
     	<h1>ODLC</h1>
+		
         	<div style="display:flex; flex-direction: row">
+				
             	<div style="display:flex; flex-direction: column" style="width: 50%">
+						
                 	<img src= {{x}} name="MainImage" id="MainImage" alt="IMAGE NOT FOUND" width="500" height="333">
+						
+						<br /><br />
+						
+						<div style="display:flex; flex-direction: row">
+							
+						<form method="post" action="{{url_for('previous_image')}}" style="width: 50%">
+							<button name="PreviousImg">Previous</button>
+						</form>
+				
+						<form method="post" action="{{url_for('next_image')}}" style="width: 50%">
+							<button name="NextImg">Next</button>
+						</form>
+						
+						<br /><br /><br />
+						
+						</div>
+						<form method="post" action="{{url_for('delete_image')}}">
+							<button name="DeleteImg">Delete</button>
+						</form>
+						
         		</div>
 				
         	<div style="display:flex; flex-direction: column; align-items: center" style="width:50%">
+				
 				<form style="display:flex; flex-direction: column; align-items: center" style="width:50%" method="post" action="{{url_for('submit_form')}}">
 	
 					<h2>Letter Colour</h2>
 
 					<select name="letter_colour">
-						<option value="{{odlc_colours[0]}}" selected>{{odlc_colours[0]}}</option>
-				    	{% for letter_colour in odlc_colours[1:] %}
+						<option value="{{odlc_l_colours[0]}}" selected>{{odlc_l_colours[0]}}</option>
+				    	{% for letter_colour in odlc_l_colours[1:] %}
 				    	<option value= "{{letter_colour}}" SELECTED>{{letter_colour}}</option>"
 				    	{% endfor %}
 					</select>
@@ -31,13 +58,12 @@
 				    	<option value= "{{alphanumeric}}" SELECTED>{{alphanumeric}}</option>"
 				    	{% endfor %}
 					</select>
-					<!--<input type="text" name="alphanumeric" style="width: 50%" pattern="[a-zA-Z0-9]" size="1" /><br />-->
 
 					<h2>Background Colour</h2>
 
 					<select name="bg_colour">
-						<option value="{{odlc_colours[0]}}" selected>{{odlc_colours[0]}}</option>
-				    	{% for bg_colour in odlc_colours[1:] %}
+						<option value="{{odlc_s_colours[0]}}" selected>{{odlc_s_colours[0]}}</option>
+				    	{% for bg_colour in odlc_s_colours[1:] %}
 				    	<option value= "{{bg_colour}}" SELECTED>{{bg_colour}}</option>"
 				    	{% endfor %}
 					</select>
@@ -61,26 +87,16 @@
 					</select>
 					
 					<div>
-						<br/>
+						<br/><br /><br />
 						<button name="SubmitBtn">Submit</button>
 					</div>
 
 				</form>
 				
-				<form method="post" action="{{url_for('previous_image')}}">
-					<button name="PreviousImg">Previous</button>
-					
-				</form>
-				
-				<form method="post" action="{{url_for('next_image')}}">
-					<button name="NextImg">Next</button>
-				</form>
-				
-				<form method="post" action="{{url_for('delete_image')}}">
-					<button name="DeleteImg">Delete</button>
-				</form>
-				
 			</div>
+			
 		</div>
+		
 	</body>
+	
 </html>
