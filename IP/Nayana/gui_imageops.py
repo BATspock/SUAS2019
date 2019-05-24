@@ -1,7 +1,9 @@
 import os
+import PIL.Image
+import time
 
-path = '/Users/nayana/projects/flask1/GUI/static/images'
-path1 = '/Users/nayana/projects/flask1/GUI/static/images_moved/'
+path = '/Users/nayana/projects/flask1/Nayana_trial/static/images'
+path1 = '/Users/nayana/projects/flask1/Nayana_trial/static/images_moved/'
 
 class ImageVals:
     
@@ -18,7 +20,7 @@ class ImageVals:
                 if statinfo.st_size!=0:
                     if filepath.endswith('.jpg') or filepath.endswith('.JPG') or filepath.endswith('.png') or filepath.endswith('.PNG'):
                         if filepath not in self.imageArray:
-                            self.imageArray.append(filepath)                        
+                            self.imageArray.append(filepath)                
         return None
 
     def previousimg(self,imageArray,imageIndex,myImage):
@@ -42,9 +44,8 @@ class ImageVals:
         return None
         
     def moveimg(self,imageArray,imageIndex):
-        old_file = os.path.join(path,self.imageArray[self.imageIndex])
-        new_file = os.path.join(path1,self.imageArray[self.imageIndex])
-        os.rename(self.imageArray[self.imageIndex], path1+'img'+str(imageIndex)+'.jpg')
+        t = time.time()
+        os.rename(self.imageArray[self.imageIndex], path1+'img'+str(t)+'.jpg')
         self.imageArray.remove(self.imageArray[self.imageIndex])
         if(self.imageIndex==len(self.imageArray)):
             self.imageIndex=0
@@ -54,4 +55,24 @@ class ImageVals:
     def image_src(self,imageArray,imageIndex):
        if self.imageArray:
           return self.imageArray[self.imageIndex]
-    
+          
+    def metadata(self,imageArray,imageIndex):
+       temp={}
+       latlon={}
+       imgpath = os.path.join(path,self.imageArray[self.imageIndex])
+       img = PIL.Image.open(imgpath)
+       for k, v in img._getexif().items():
+          string=str(v).replace('{','').replace('}','')
+          try:
+             temp = dict((x.strip(), y.strip()) for x, y in (element.split(': ') for element in string.split(', ')))
+             for k, v in temp.items():
+                attr = k.replace('\'','').replace('\'','')
+                if attr=='lat' or attr=='lon':
+                   val = float(temp.get(k))
+                   latlon[attr] = val
+          except:
+             pass
+       if not latlon:
+          latlon['lat']=0.0
+          latlon['lon']=0.0
+       return latlon

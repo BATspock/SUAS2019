@@ -1,102 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
-
 	<head>
 	<meta charset="UTF-8">
-	<title>ODLC</title>
+		<title>ODLC</title>
+		
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+		
 	</head>
 	
-   <body style="display:flex; flex-direction: column; align-items: left">
-		
-    	<h1>ODLC</h1>
-		
-        	<div style="display:flex; flex-direction: row">
+	<body>
+		<div class="row pl-5 pt-2">
+		<h1>ODLC</h1>
+		</div>
+		<div class="container-fluid row">
+			
+			<div class="container-fluid column col-sm-6 mx-auto">
+				<div class="row p-2 pl-5 pb-4">
+				<img src= {{x}} name="MainImage" id="MainImage" alt="IMAGE NOT FOUND" width="500" height="333">
+				</div>
 				
-            	<div style="display:flex; flex-direction: column" style="width: 50%">
-						
-                	<img src= {{x}} name="MainImage" id="MainImage" alt="IMAGE NOT FOUND" width="500" height="333">
-						
-						<br /><br />
-						
-						<div style="display:flex; flex-direction: row">
-							
-						<form method="post" action="{{url_for('previous_image')}}" style="width: 50%">
-							<button name="PreviousImg">Previous</button>
-						</form>
+				<div class="p-2 pl-5 form-group col-sm-6">
+				<form method="post" action="{{url_for('previous_image')}}">
+					<button name="PreviousImg" class="form-control">Previous</button>
+				</form>
+				</div>
+			
+				<div class="p-2 pl-5 form-group col-sm-6">
+				<form method="post" action="{{url_for('next_image')}}">
+					<button name="NextImg" class="form-control">Next</button>
+				</form>
+				</div>
+			
+				<div class="p-2 pl-5 form-group col-sm-6">
+				<form method="post" action="{{url_for('delete_image')}}">
+					<button name="DeleteImg" class="form-control">Delete</button>
+				</form>
+				</div>
 				
-						<form method="post" action="{{url_for('next_image')}}" style="width: 50%">
-							<button name="NextImg">Next</button>
-						</form>
-						
-						<br /><br /><br />
-						
-						</div>
-						<form method="post" action="{{url_for('delete_image')}}">
-							<button name="DeleteImg">Delete</button>
-						</form>
-						
-        		</div>
-				
-        	<div style="display:flex; flex-direction: column; align-items: center" style="width:50%">
-				
-				<form style="display:flex; flex-direction: column; align-items: center" style="width:50%" method="post" action="{{url_for('submit_form')}}">
+			</div>
+			
+			
+			<div class="container-fluid column col-sm-6">
+				<form method="post" action="{{url_for('submit_form')}}">
 	
-					<h2>Letter Colour</h2>
+					<div class="row p-2">
+					<h3>Alphanumeric</h3>
+					</div>
+					
+					<div class=" row p-2 form-group col-sm-6">
 
-					<select name="letter_colour">
-						<option value="{{odlc_l_colours[0]}}" selected>{{odlc_l_colours[0]}}</option>
-				    	{% for letter_colour in odlc_l_colours[1:] %}
-				    	<option value= "{{letter_colour}}" SELECTED>{{letter_colour}}</option>"
-				    	{% endfor %}
-					</select>
-				
-					<h2>Letter </h2>
-
-					<select name="alphanumeric">
+					<select name="alphanumeric" class="form-control">
 						<option value="{{alphanumeric[0]}}" selected>{{alphanumeric[0]}}</option>
 				    	{% for alphanumeric in alphanumeric[1:] %}
 				    	<option value= "{{alphanumeric}}" SELECTED>{{alphanumeric}}</option>"
 				    	{% endfor %}
 					</select>
+					
+					</div>
+					<!--<input type="text" name="alphanumeric" style="width: 50%" pattern="[a-zA-Z0-9]" size="1" /><br />-->
+					
+					<div class="row p-3">
+					<h3>Alphanumeric Colour</h3>
+					</div>
+					
+					<div class="row p-2 form-group col-sm-6">
 
-					<h2>Background Colour</h2>
+					<select name="letter_colour" class="form-control">
+						<option value="{{odlc_l_colours[0]}}" selected>{{odlc_l_colours[0]}}</option>
+				    	{% for letter_colour in odlc_l_colours[1:] %}
+				    	<option value= "{{letter_colour}}" SELECTED>{{letter_colour}}</option>"
+				    	{% endfor %}
+					</select>
+					
+					</div>
+					
+					<div class="row p-2">
+					<h3>Background Colour</h3>
+					</div>
+					
+					<div class="row p-2 form-group col-sm-6">
 
-					<select name="bg_colour">
+					<select name="bg_colour" class="form-control">
 						<option value="{{odlc_s_colours[0]}}" selected>{{odlc_s_colours[0]}}</option>
 				    	{% for bg_colour in odlc_s_colours[1:] %}
 				    	<option value= "{{bg_colour}}" SELECTED>{{bg_colour}}</option>"
 				    	{% endfor %}
 					</select>
+					
+					</div>
+					
+					<div class="row p-2">
+					<h3>Shape</h3>
+					</div>
+					
+					<div class="row p-2 form-group col-sm-6">
 
-					<h2>Shape</h2>
-
-					<select name="shape">
+					<select name="shape" class="form-control">
 						<option value="{{shapes[0]}}" selected>{{shapes[0]}}</option>
 				  	  	{% for shape in shapes[1:] %}
 				 	   <option value= "{{shape}}" SELECTED>{{shape}}</option>"
 				    	{% endfor %}
 					</select>
+					
+					</div>
+					
+					<div class="row p-2">
+					<h3>Orientation</h3>
+					</div>
+					
+					<div class="row p-2 form-group col-sm-6">
 
-					<h2>Orientation</h2>
-
-					<select name="orientation">
+					<select name="orientation" class="form-control">
 						<option value="{{orientations[0]}}" selected>{{orientations[0]}}</option>
 				    	{% for orientation in orientations[1:] %}
 				    	<option value= "{{orientation}}" SELECTED>{{orientation}}</option>"
 				   	 	{% endfor %}
 					</select>
 					
-					<div>
-						<br/><br /><br />
-						<button name="SubmitBtn">Submit</button>
+					</div>
+					
+					<div class="container-fluid">
+					<div class="row p-2 col-sm-6 form-group">
+						<button name="SubmitBtn" class="form-control">Submit</button>
+					</div>
+					
+					</form>
 					</div>
 
-				</form>
-				
 			</div>
-			
 		</div>
-		
 	</body>
-	
 </html>
