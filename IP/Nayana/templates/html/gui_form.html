@@ -23,6 +23,15 @@
 				</div>
 				
 				<div class="p-2 pl-5 form-group col-sm-6">
+				<p>{{path}}</p>
+				</div>
+				
+				<div class="p-2 pl-5 form-group col-sm-6">
+				<p>Lat:{{lat}}</p>
+				<p>Lon:{{lon}}</p>
+				</div>
+				
+				<div class="p-2 pl-5 form-group col-sm-6">
 				<form method="post" action="{{url_for('previous_image')}}">
 					<button name="PreviousImg" class="form-control">Previous</button>
 				</form>

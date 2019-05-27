@@ -20,7 +20,8 @@ class ImageVals:
                 if statinfo.st_size!=0:
                     if filepath.endswith('.jpg') or filepath.endswith('.JPG') or filepath.endswith('.png') or filepath.endswith('.PNG'):
                         if filepath not in self.imageArray:
-                            self.imageArray.append(filepath)                
+                            self.imageArray.append(filepath)  
+              
         return None
 
     def previousimg(self,imageArray,imageIndex,myImage):
@@ -59,20 +60,19 @@ class ImageVals:
     def metadata(self,imageArray,imageIndex):
        temp={}
        latlon={}
+       latlon['lat'] = 0.0
+       latlon['lon'] = 0.0
        imgpath = os.path.join(path,self.imageArray[self.imageIndex])
        img = PIL.Image.open(imgpath)
-       for k, v in img._getexif().items():
-          string=str(v).replace('{','').replace('}','')
-          try:
+       try:
+          for k, v in img._getexif().items():
+             string=str(v).replace('{','').replace('}','')
              temp = dict((x.strip(), y.strip()) for x, y in (element.split(': ') for element in string.split(', ')))
              for k, v in temp.items():
                 attr = k.replace('\'','').replace('\'','')
                 if attr=='lat' or attr=='lon':
                    val = float(temp.get(k))
                    latlon[attr] = val
-          except:
-             pass
-       if not latlon:
-          latlon['lat']=0.0
-          latlon['lon']=0.0
+       except:
+          pass
        return latlon

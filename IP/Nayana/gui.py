@@ -22,14 +22,16 @@ shapes = ['Circle', 'Semicircle', 'Quarter circle', 'Triangle','Square', 'Rectan
 orientations = ['N','NE','E','SE','S','SW','W','NW']
 alphanumeric = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','1','2','3','4','5','6','7','8','9','0']
 
-dict_orient =	{"N":0, "NE":1, "E":2, "SE":3, "S":4, "SW":5, "W":6, "NW":7}
+dict_orient =	{"N":1, "NE":2, "E":3, "SE":4, "S":5, "SW":6, "W":7, "NW":8}
 
-dict_shape =	{ "Circle":0, "Semicircle":1, "Quarter circle":2, "Triangle":3, "Square":4, "Rectangle":5, "Trapezoid":6, "Pentagon":7, "Hexagon":8, "Heptagon":9, "Octagon":10, "Star":11, "Cross":12}
+dict_shape =	{ "Circle":1, "Semicircle":2, "Quarter circle":3, "Triangle":4, "Square":5, "Rectangle":6, "Trapezoid":7, "Pentagon":8, "Hexagon":9, "Heptagon":10, "Octagon":11, "Star":12, "Cross":13}
 
-dict_colour = {'White':0, 'Black':1, 'Gray':2, 'Red':3, 'Blue':4, 'Green':5, 'Yellow':6, 'Purple':7, 'Brown':8, 'Orange':9}
+dict_colour = {'White':1, 'Black':2, 'Gray':3, 'Red':4, 'Blue':5, 'Green':6, 'Yellow':7, 'Purple':8, 'Brown':9, 'Orange':10}
+
+div_factor = 10000000
 
 im = gui_imageops.ImageVals(0,[])
-#http://192.168.43.149:8000
+
 client = client.Client(url='http://127.0.0.1:8000',
                        username='testuser',
                        password='testpass')
@@ -42,11 +44,16 @@ def dropdown():
     if not im.imageArray:
        return "Folder is empty"
        
-    else:   
+    else:
+       fullpath = im.image_src(im.imageArray,im.imageIndex)
        x = im.image_src(im.imageArray,im.imageIndex).replace(path, '')
+       latlon=im.metadata(im.imageArray,im.imageIndex)
+       
+       lat = latlon['lat']/div_factor
+       lon = latlon['lon']/div_factor
        
        return render_template('html/gui_form.html', odlc_l_colours = colours, odlc_s_colours = colours, shapes = shapes,
-       orientations = orientations, alphanumeric = alphanumeric, x=str('../../static/images') + x) 
+       orientations = orientations, alphanumeric = alphanumeric, x=str('../../static/images') + x, path = fullpath, lat = lat, lon = lon) 
         
 @app.route('/submitForm', methods=['GET','POST'])
 def submit_form():
@@ -56,8 +63,6 @@ def submit_form():
     bg_colour= request.form['bg_colour']
     shapeval= request.form['shape']
     orientationval= request.form['orientation']
-   
-    print('Submitting '+letter_colour+' '+alphanumericval+' '+bg_colour+' '+shapeval)
     
     send_image = im.image_src(im.imageArray,im.imageIndex)
     
@@ -66,8 +71,8 @@ def submit_form():
     odlc = interop_api_pb2.Odlc()
     
     odlc.type = interop_api_pb2.Odlc.STANDARD
-    odlc.latitude=latlon.get('lat')
-    odlc.longitude=latlon.get('lon')
+    odlc.latitude=latlon.get('lat')/div_factor
+    odlc.longitude=latlon.get('lon')/div_factor
     odlc.orientation = dict_orient[orientationval]
     odlc.shape=dict_shape[shapeval]
     odlc.shape_color=dict_colour[bg_colour]
@@ -75,7 +80,7 @@ def submit_form():
     odlc.alphanumeric_color=dict_colour[letter_colour]
     
     odlc = client.post_odlc(odlc)
-    
+
     with open(send_image, 'rb') as f:
         image_data = f.read()
         client.put_odlc_image(odlc.id, image_data)  
@@ -100,4 +105,4 @@ def delete_image():
     return redirect("/")
 
 if __name__ == "__main__":
-    app.run(debug = True)
+    app.run(debug=True)
